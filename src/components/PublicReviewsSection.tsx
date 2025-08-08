@@ -2,20 +2,13 @@
 import { isApproved } from '@/lib/approvals'
 import { Box, Heading, Stack, Text } from '@chakra-ui/react'
 import ReviewCard from '@/components/ReviewCard'
+import type { NormalizedReview } from '@/lib/normalize'
 
-type Review = {
-  id: string
-  listingId: string
-  listingName: string
-  type: string
-  rating: number | null
-  categories: { key: string; rating: number }[]
-  comment: string
-  submittedAt: string
-  guestName?: string
-}
-
-export default function PublicReviewsSection({ data }: { data: Review[] }) {
+export default function PublicReviewsSection({
+  data,
+}: {
+  data: NormalizedReview[]
+}) {
   const approved = data.filter((r) => isApproved(r.listingId, r.id))
 
   return (
