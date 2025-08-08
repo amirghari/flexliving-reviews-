@@ -39,40 +39,45 @@ export default function ReviewCard({ r, enableApproval = false }: Props) {
     <Box
       borderWidth="1px"
       rounded="xl"
-      p={4}
+      p={{ base: 3, md: 4 }}
       bg="white"
       boxShadow="sm"
       outline={approved ? '2px solid' : undefined}
       outlineColor={approved ? 'solid' : 'secondary'}
       transition="outline-color 0.2s ease"
     >
-      <HStack justify="space-between" align="start">
-        <Heading size="sm">{r.listingName}</Heading>
-        <Text fontSize="sm" color="gray.600">
+      <HStack justify="space-between" align="start" wrap="wrap">
+        <Heading fontSize={{ base: 'md', md: 'lg' }}>{r.listingName}</Heading>
+        <Text fontSize={{ base: 'xs', md: 'sm' }} color="gray.600">
           {new Date(r.submittedAt).toLocaleDateString()}
         </Text>
       </HStack>
 
       {r.guestName && (
-        <Text mt={1} fontSize="sm" color="gray.600">
+        <Text mt={1} fontSize={{ base: 'xs', md: 'sm' }} color="gray.600">
           Guest: {r.guestName}
         </Text>
       )}
 
-      <Text mt={2}>{r.comment}</Text>
+      <Text mt={2} fontSize={{ base: 'sm', md: 'md' }}>
+        {r.comment}
+      </Text>
 
       <Flex mt={2} gap={2} flexWrap="wrap">
-        <Tag variant="metric">Overall: {r.rating ?? '—'}</Tag>
+        <Tag variant="metric" fontSize={{ base: 'xs', md: 'sm' }}>
+          Overall: {r.rating ?? '—'}
+        </Tag>
         {r.categories?.map((c) => (
-          <Tag key={c.key} variant="metric">
+          <Tag key={c.key} variant="metric" fontSize={{ base: 'xs', md: 'sm' }}>
             {c.key}: {c.rating}
           </Tag>
         ))}
       </Flex>
 
       {enableApproval && (
-        <Stack mt={3} direction="row" spacing={3}>
+        <Stack mt={3} direction={{ base: 'column', sm: 'row' }} spacing={3}>
           <Button
+            size={{ base: 'sm', md: 'md' }}
             variant={approved ? 'solid' : 'secondary'}
             onClick={handleToggle}
           >
@@ -84,6 +89,7 @@ export default function ReviewCard({ r, enableApproval = false }: Props) {
           <Button
             as={Link}
             href={`/properties/${r.listingId}`}
+            size={{ base: 'sm', md: 'md' }}
             variant="outline"
           >
             View public page

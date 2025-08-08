@@ -1,4 +1,3 @@
-// src/app/properties/[listingId]/PropertyPageClient.tsx
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
@@ -7,14 +6,14 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
+  Divider,
   Heading,
   HStack,
   Image as ChakraImage,
   SimpleGrid,
   Stack,
-  Text,
   Tag,
-  Divider,
+  Text,
   useToken,
 } from '@chakra-ui/react'
 import PublicReviewsSection from '@/components/PublicReviewsSection'
@@ -46,8 +45,14 @@ export default function PropertyPageClient({
   const imageSrc = propertyImages[listingName] ?? '/images/default-property.jpg'
 
   return (
-    <Box maxW="1100px" mx="auto">
-      <Breadcrumb fontSize="sm" mb={4}>
+    <Box
+      maxW="1100px"
+      mx="auto"
+      px={{ base: 4, md: 6 }}
+      py={{ base: 6, md: 8 }}
+    >
+      {/* Breadcrumb */}
+      <Breadcrumb fontSize={{ base: 'xs', md: 'sm' }} mb={{ base: 3, md: 4 }}>
         <BreadcrumbItem>
           <BreadcrumbLink href="/">Home</BreadcrumbLink>
         </BreadcrumbItem>
@@ -56,60 +61,66 @@ export default function PropertyPageClient({
         </BreadcrumbItem>
       </Breadcrumb>
 
-      <SimpleGrid columns={{ base: 1, md: 2 }} gap={6} mb={6}>
+      {/* Hero: image + details */}
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 4, md: 6 }} mb={6}>
         <ChakraImage
           src={imageSrc}
           alt={listingName}
           rounded="xl"
           objectFit="cover"
-          h={{ base: '220px', md: '320px' }}
+          w="100%"
+          h={{ base: '220px', md: '340px' }}
           border="1px solid"
           borderColor={brand50}
         />
-        <Stack spacing={3} justify="center">
-          <Heading size="xl">{listingName}</Heading>
-          <HStack spacing={2}>
+        <Stack spacing={{ base: 2, md: 3 }} justify="center">
+          <Heading fontSize={{ base: 'xl', md: '2xl' }}>{listingName}</Heading>
+          <HStack spacing={2} flexWrap="wrap">
             <Tag>2 guests</Tag>
             <Tag>1 bedroom</Tag>
             <Tag>Great location</Tag>
           </HStack>
-          <Text color="gray.600">
+          <Text color="gray.600" fontSize={{ base: 'sm', md: 'md' }}>
             A modern, comfy flat in a vibrant neighborhood. Walk to cafes,
             galleries, and transit.
           </Text>
         </Stack>
       </SimpleGrid>
 
-      <Divider mb={6} />
+      <Divider mb={{ base: 5, md: 6 }} />
 
-      <SimpleGrid columns={{ base: 1, md: 3 }} gap={6} mb={8}>
-        <Box bg="white" p={4} rounded="lg" boxShadow="sm">
+      {/* Info cards */}
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap={{ base: 4, md: 6 }} mb={8}>
+        <Box bg="white" p={{ base: 3, md: 4 }} rounded="lg" boxShadow="sm">
           <Heading size="sm" mb={2}>
             Highlights
           </Heading>
-          <Text color="gray.600">
-            Keyless entry, fast Wi-Fi, fully equipped kitchen.
+          <Text color="gray.600" fontSize={{ base: 'sm', md: 'md' }}>
+            Keyless entry, fast Wi‑Fi, fully equipped kitchen.
           </Text>
         </Box>
-        <Box bg="white" p={4} rounded="lg" boxShadow="sm">
+
+        <Box bg="white" p={{ base: 3, md: 4 }} rounded="lg" boxShadow="sm">
           <Heading size="sm" mb={2}>
             Neighborhood
           </Heading>
-          <Text color="gray.600">
+          <Text color="gray.600" fontSize={{ base: 'sm', md: 'md' }}>
             Soho / Shoreditch vibes. Nightlife, dining, and art on your
             doorstep.
           </Text>
         </Box>
-        <Box bg="white" p={4} rounded="lg" boxShadow="sm">
+
+        <Box bg="white" p={{ base: 3, md: 4 }} rounded="lg" boxShadow="sm">
           <Heading size="sm" mb={2}>
             House Rules
           </Heading>
-          <Text color="gray.600">
+          <Text color="gray.600" fontSize={{ base: 'sm', md: 'md' }}>
             No parties, no smoking, quiet hours after 10pm.
           </Text>
         </Box>
       </SimpleGrid>
 
+      {/* Approved-only reviews */}
       <PublicReviewsSection data={data} />
     </Box>
   )
