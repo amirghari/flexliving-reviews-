@@ -17,11 +17,13 @@ export default function DashboardPage() {
 
   const qs = useMemo(() => {
     const p = new URLSearchParams()
-    if (filters.listingId) p.set('listingId', filters.listingId)
-    if (filters.minRating != null) p.set('minRating', String(filters.minRating))
     if (filters.q) p.set('q', filters.q)
+    if (filters.minRating != null) p.set('minRating', String(filters.minRating))
+    if (filters.from) p.set('from', filters.from) // YYYY-MM-DD
+    if (filters.to) p.set('to', filters.to) // YYYY-MM-DD
     if (filters.sort) p.set('sort', filters.sort)
-    return `?${p.toString()}`
+    const s = p.toString()
+    return s ? `?${s}` : ''
   }, [filters])
 
   return (

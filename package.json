@@ -14,6 +14,8 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@vercel/kv": "^3.0.0",
+    "chakra-dayzed-datepicker": "^0.3.1",
+    "dayzed": "^3.2.3",
     "framer-motion": "^10.18.0",
     "next": "15.4.6",
     "react": "19.1.0",

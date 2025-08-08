@@ -21,11 +21,11 @@ export default function SidePanel({
       borderColor={border}
       p={4}
       pos={{ md: 'sticky' }}
-      top={0}
-      h={{ md: '100vh' }}
+      top={2}
+      h={{ md: '75vh' }}
       overflowY="auto"
     >
-      <Flex align="center" gap={2} mb={100}>
+      <Flex align="center" gap={2} mb={50}>
         <Image
           src="/favicon-white.png"
           alt="Manager Dashboard Icon"

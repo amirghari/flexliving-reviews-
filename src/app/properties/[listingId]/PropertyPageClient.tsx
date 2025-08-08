@@ -28,9 +28,10 @@ export default function PropertyPageClient({
   const [data, setData] = useState<any[]>([])
   const [brand50] = useToken('colors', ['brand.50'])
 
-  const qs = useMemo(() => `?listingId=${listingId}&sort=date_desc`, [
-    listingId,
-  ])
+  const qs = useMemo(
+    () => `?listingId=${encodeURIComponent(listingId)}&sort=date_desc`,
+    [listingId],
+  )
 
   useEffect(() => {
     fetch(`/api/reviews/hostaway${qs}`)

@@ -9,18 +9,26 @@ import {
   Select,
   SimpleGrid,
   VStack,
+  HStack,
+  InputGroup,
+  InputLeftElement,
+  Icon,
+  Button,
+  Text,
 } from '@chakra-ui/react'
+import { FiCalendar } from 'react-icons/fi'
 
 export type FiltersState = {
-  listingId?: string
   minRating?: number
   q?: string
   sort?: string
+  from?: string // YYYY-MM-DD
+  to?: string // YYYY-MM-DD
 }
 
 export default function Filters({
   onChange,
-  layout = 'grid', // 'grid' | 'vertical'
+  layout = 'grid',
 }: {
   onChange: (s: FiltersState) => void
   layout?: 'grid' | 'vertical'
@@ -33,18 +41,26 @@ export default function Filters({
     onChange(next)
   }
 
+  function clearDates() {
+    const next = { ...state, from: undefined, to: undefined }
+    setState(next)
+    onChange(next)
+  }
+
   const Controls = (
     <>
+      {/* Search (top) */}
       <FormControl>
-        <FormLabel>Listing ID</FormLabel>
+        <FormLabel>Search</FormLabel>
         <Input
-          placeholder="soho-loft-5c"
-          onChange={(e) => update('listingId', e.target.value || undefined)}
+          placeholder="Comment, Guest, Listing Name"
+          onChange={(e) => update('q', e.target.value || undefined)}
         />
       </FormControl>
 
+      {/* Min overall */}
       <FormControl>
-        <FormLabel>Min Rating</FormLabel>
+        <FormLabel>Min Overall</FormLabel>
         <NumberInput
           min={0}
           max={10}
@@ -56,18 +72,40 @@ export default function Filters({
         </NumberInput>
       </FormControl>
 
+      {/* Date range (clean inline inputs) */}
       <FormControl>
-        <FormLabel>Search</FormLabel>
-        <Input
-          placeholder="comment or guest"
-          onChange={(e) => update('q', e.target.value || undefined)}
-        />
+        <FormLabel>From</FormLabel>
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={FiCalendar} color="brand.500" />
+          </InputLeftElement>
+          <Input
+            type="date"
+            value={state.from ?? ''}
+            onChange={(e) => update('from', e.target.value || undefined)}
+          />
+        </InputGroup>
       </FormControl>
 
       <FormControl>
+        <FormLabel>To</FormLabel>
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <Icon as={FiCalendar} color="brand.500" />
+          </InputLeftElement>
+          <Input
+            type="date"
+            value={state.to ?? ''}
+            onChange={(e) => update('to', e.target.value || undefined)}
+          />
+        </InputGroup>
+      </FormControl>
+
+      {/* Sort */}
+      <FormControl>
         <FormLabel>Sort</FormLabel>
         <Select
-          defaultValue="date_desc"
+          value={state.sort ?? 'date_desc'}
           onChange={(e) => update('sort', e.target.value)}
         >
           <option value="date_desc">Newest</option>
@@ -76,6 +114,13 @@ export default function Filters({
           <option value="rating_asc">Rating ↑</option>
         </Select>
       </FormControl>
+
+      {/* Clear dates */}
+      <HStack alignSelf="end">
+        <Button size="sm" variant="outline" onClick={clearDates}>
+          Clear dates
+        </Button>
+      </HStack>
     </>
   )
 
