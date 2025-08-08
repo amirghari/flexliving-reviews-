@@ -1,10 +1,12 @@
 'use client'
+
 import { useMemo, useState } from 'react'
-import Filters, { FiltersState } from '@/components/Filters'
+import { Box, Container, Divider, Flex, Heading } from '@chakra-ui/react'
+import SidePanel from '@/components/SidePanel'
+import Filters, { FiltersState } from '@/components/Filters' // only for type
 import ReviewList from '@/components/ReviewList'
 import TrendChart from '@/components/TrendChart'
 import ApprovalControls from '@/components/ApprovalControls'
-import { Heading, SimpleGrid, Box } from '@chakra-ui/react'
 
 export default function DashboardPage() {
   const [filters, setFilters] = useState<FiltersState>({ sort: 'date_desc' })
@@ -19,31 +21,40 @@ export default function DashboardPage() {
   }, [filters])
 
   return (
-    <Box maxW="1100px" mx="auto" p={4}>
-      <Heading size="lg" mb={4}>
-        Manager Dashboard
-      </Heading>
-      <Filters onChange={setFilters} />
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4} mt={4}>
-        <Box gridColumn={{ md: 'span 2' }}>
-          <Heading size="md" mb={2}>
-            Reviews
-          </Heading>
-          <ReviewList qs={qs} enableApproval />
-        </Box>
-        <Box>
-          <Heading size="md" mb={2}>
-            Average Rating Over Time
-          </Heading>
-          <TrendChart qs={qs} />
-          <Box mt={4}>
+    <Flex minH="100vh" bg="gray.50">
+      {/* LEFT SIDEBAR WITH FILTERS */}
+      <SidePanel onChange={setFilters} />
+
+      {/* MAIN CONTENT */}
+      <Box flex="1" p={{ base: 4, md: 6 }} maxW="1100px" mx="auto">
+        <Flex gap={6} direction={{ base: 'column', lg: 'row' }}>
+          {/* Reviews */}
+          <Box flex="2" minW={0}>
+            <Heading size="md" mb={3}>
+              Reviews
+            </Heading>
+            <ReviewList qs={qs} enableApproval />
+          </Box>
+
+          {/* Chart + Approvals */}
+          <Box flex="1" minW="320px">
+            <Heading size="md" mb={3}>
+              Average Rating Over Time
+            </Heading>
+            <TrendChart qs={qs} dateLabelFontSize={10} dateLabelMargin={10} />
+
+            {/* extra space between chart and approvals */}
+            <Divider my={5} />
+
             <Heading size="sm" mb={2}>
               Approvals Export/Import
             </Heading>
-            <ApprovalControls />
+            <Box>
+              <ApprovalControls />
+            </Box>
           </Box>
-        </Box>
-      </SimpleGrid>
-    </Box>
+        </Flex>
+      </Box>
+    </Flex>
   )
 }

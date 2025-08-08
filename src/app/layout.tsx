@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Providers from './providers'
+import { Box } from '@chakra-ui/react'
 
 export const metadata: Metadata = {
   title: 'Flex Living Reviews Dashboard',
@@ -14,7 +15,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          {/* Global breathing room for the whole app */}
+          <Box minH="100vh" bg="gray.50" p={{ base: 4, md: 8 }}>
+            {children}
+          </Box>
+        </Providers>
       </body>
     </html>
   )

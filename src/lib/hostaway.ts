@@ -1,5 +1,9 @@
 import mock from '@/data/mockReviews.json';
-import { HostawayReviewSchema, normalizeHostaway, NormalizedReview } from './normalize';
+import {
+  HostawayReviewSchema,
+  normalizeHostaway,
+  type NormalizedReview,
+} from './normalize';
 
 export type ReviewsResponse =
   | { ok: true; total: number; page: number; pageSize: number; data: NormalizedReview[] }
@@ -31,7 +35,9 @@ export function applyFilters(
   if (minRating) out = out.filter((r) => (r.rating ?? 0) >= Number(minRating));
   if (from) out = out.filter((r) => new Date(r.submittedAt) >= from);
   if (to) out = out.filter((r) => new Date(r.submittedAt) <= to);
-  if (q) out = out.filter((r) => (r.comment + ' ' + (r.guestName ?? '')).toLowerCase().includes(q));
+  if (q) out = out.filter((r) =>
+    (r.comment + ' ' + (r.guestName ?? '')).toLowerCase().includes(q)
+  );
 
   const sort = params.get('sort') ?? 'date_desc';
   out.sort((a, b) => {

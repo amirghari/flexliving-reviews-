@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect, useMemo, useState } from 'react'
 import {
   LineChart,
@@ -11,8 +12,19 @@ import {
 } from 'recharts'
 import { Box } from '@chakra-ui/react'
 
-export default function TrendChart({ qs }: { qs: string }) {
+type TrendChartProps = {
+  qs: string
+  dateLabelFontSize?: number
+  dateLabelMargin?: number
+}
+
+export default function TrendChart({
+  qs,
+  dateLabelFontSize = 12, // default font size
+  dateLabelMargin = 0, // default extra margin
+}: TrendChartProps) {
   const [data, setData] = useState<any[]>([])
+
   useEffect(() => {
     fetch(`/api/reviews/hostaway${qs}`)
       .then((r) => r.json())
@@ -47,13 +59,17 @@ export default function TrendChart({ qs }: { qs: string }) {
       <ResponsiveContainer>
         <LineChart
           data={series}
-          margin={{ top: 10, right: 20, left: 0, bottom: 0 }}
+          margin={{ top: 10, right: 20, left: 0, bottom: dateLabelMargin }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
+          <XAxis
+            dataKey="date"
+            tick={{ fontSize: dateLabelFontSize }}
+            height={30 + dateLabelMargin}
+          />
           <YAxis domain={[0, 10]} />
           <Tooltip />
-          <Line type="monotone" dataKey="avg" dot={false} />
+          <Line type="monotone" dataKey="avg" dot={false} stroke="#3182CE" />
         </LineChart>
       </ResponsiveContainer>
     </Box>

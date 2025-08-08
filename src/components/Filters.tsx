@@ -8,6 +8,7 @@ import {
   NumberInputField,
   Select,
   SimpleGrid,
+  VStack,
 } from '@chakra-ui/react'
 
 export type FiltersState = {
@@ -19,8 +20,10 @@ export type FiltersState = {
 
 export default function Filters({
   onChange,
+  layout = 'grid', // 'grid' | 'vertical'
 }: {
   onChange: (s: FiltersState) => void
+  layout?: 'grid' | 'vertical'
 }) {
   const [state, setState] = useState<FiltersState>({ sort: 'date_desc' })
 
@@ -30,8 +33,8 @@ export default function Filters({
     onChange(next)
   }
 
-  return (
-    <SimpleGrid columns={{ base: 1, md: 4 }} spacing={3}>
+  const Controls = (
+    <>
       <FormControl>
         <FormLabel>Listing ID</FormLabel>
         <Input
@@ -39,6 +42,7 @@ export default function Filters({
           onChange={(e) => update('listingId', e.target.value || undefined)}
         />
       </FormControl>
+
       <FormControl>
         <FormLabel>Min Rating</FormLabel>
         <NumberInput
@@ -51,6 +55,7 @@ export default function Filters({
           <NumberInputField />
         </NumberInput>
       </FormControl>
+
       <FormControl>
         <FormLabel>Search</FormLabel>
         <Input
@@ -58,6 +63,7 @@ export default function Filters({
           onChange={(e) => update('q', e.target.value || undefined)}
         />
       </FormControl>
+
       <FormControl>
         <FormLabel>Sort</FormLabel>
         <Select
@@ -70,6 +76,16 @@ export default function Filters({
           <option value="rating_asc">Rating ↑</option>
         </Select>
       </FormControl>
+    </>
+  )
+
+  return layout === 'vertical' ? (
+    <VStack spacing={4} align="stretch">
+      {Controls}
+    </VStack>
+  ) : (
+    <SimpleGrid columns={{ base: 1, md: 4 }} spacing={3}>
+      {Controls}
     </SimpleGrid>
   )
 }
