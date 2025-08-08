@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Providers from './providers'
-import { Box } from '@chakra-ui/react'
+import './globals.css' // make sure this is here
 
 export const metadata: Metadata = {
   title: 'Flex Living Reviews Dashboard',
@@ -16,10 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          {/* Global breathing room for the whole app */}
-          <Box minH="100vh" bg="gray.50" p={{ base: 4, md: 8 }}>
-            {children}
-          </Box>
+          <div className="app-shell">{children}</div>
         </Providers>
       </body>
     </html>

@@ -24,3 +24,26 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+:root {
+  --app-pad: 16px; /* mobile */
+}
+
+@media (min-width: 768px) {
+  :root {
+    --app-pad: 32px; /* desktop */
+  }
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background-color: #f7fafc; /* Chakra gray.50 equivalent */
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: var(--app-pad);
+}

@@ -1,7 +1,6 @@
 'use client'
 
-import { Box, Flex, Heading, Icon, useColorModeValue } from '@chakra-ui/react'
-import { MdDashboard } from 'react-icons/md'
+import { Box, Flex, Heading, Image, useColorModeValue } from '@chakra-ui/react'
 import Filters, { FiltersState } from '@/components/Filters'
 
 export default function SidePanel({
@@ -16,6 +15,9 @@ export default function SidePanel({
     <Box
       w={{ base: '100%', md: '300px' }}
       bg={bg}
+      rounded="xl"
+      borderWidth="1px"
+      boxShadow="sm"
       borderColor={border}
       p={4}
       pos={{ md: 'sticky' }}
@@ -23,8 +25,17 @@ export default function SidePanel({
       h={{ md: '100vh' }}
       overflowY="auto"
     >
-      <Flex align="center" mb={100}>
-        <Icon as={MdDashboard} boxSize={6} color="blue.500" mr={2} />
+      <Flex align="center" gap={2} mb={100}>
+        <Image
+          src="/favicon-white.png"
+          alt="Manager Dashboard Icon"
+          boxSize="40px"
+          mr={2}
+          sx={{
+            filter:
+              'brightness(0) saturate(100%) invert(21%) sepia(10%) saturate(1042%) hue-rotate(118deg) brightness(95%) contrast(92%)', // deep green tint
+          }}
+        />
         <Heading size="md">Manager Dashboard</Heading>
       </Flex>
 

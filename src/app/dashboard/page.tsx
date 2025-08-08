@@ -1,14 +1,18 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Box, Container, Divider, Flex, Heading } from '@chakra-ui/react'
 import SidePanel from '@/components/SidePanel'
 import Filters, { FiltersState } from '@/components/Filters' // only for type
 import ReviewList from '@/components/ReviewList'
 import TrendChart from '@/components/TrendChart'
 import ApprovalControls from '@/components/ApprovalControls'
+import { syncApprovalsFromServer } from '@/lib/approvals'
 
 export default function DashboardPage() {
+  useEffect(() => {
+    syncApprovalsFromServer()
+  }, [])
   const [filters, setFilters] = useState<FiltersState>({ sort: 'date_desc' })
 
   const qs = useMemo(() => {
@@ -21,7 +25,7 @@ export default function DashboardPage() {
   }, [filters])
 
   return (
-    <Flex minH="100vh" bg="gray.50">
+    <Flex minH="100vh" bg="white.50">
       {/* LEFT SIDEBAR WITH FILTERS */}
       <SidePanel onChange={setFilters} />
 
@@ -45,10 +49,6 @@ export default function DashboardPage() {
 
             {/* extra space between chart and approvals */}
             <Divider my={5} />
-
-            <Heading size="sm" mb={2}>
-              Approvals Export/Import
-            </Heading>
             <Box>
               <ApprovalControls />
             </Box>
